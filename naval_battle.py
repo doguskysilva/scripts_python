@@ -1,9 +1,13 @@
+# Author: Douglas Silva#
+
 class Naval_Battle(object):
     from random import randint
     import  random
 
     size_board = 10
     board = []
+    board_atach = []
+
     ships = {1 : 5, 2 : 4, 3 : 3, 4 : 2, 5 : 1}
     #ships = {5:5}
     size_ship = 0
@@ -16,16 +20,18 @@ class Naval_Battle(object):
 
 
     def __init__(self):
-        self.loading_board()
+        self.loading_board(self.board)
+        self.loading_board(self.board_atach)
         self.loading_ship_in_board()
-        self.print_board()
+        self.print_board(self.board_atach)
 
-    def loading_board(self):
+
+    def loading_board(self, board):
         for x in range(self.size_board):
-            self.board.append([0]*self.size_board)
+            board.append([0]*self.size_board)
 
-    def print_board(self):
-        for row in self.board:
+    def print_board(self, board):
+        for row in board:
             print(row)
 
     def restart_vars(self):
@@ -147,4 +153,36 @@ class Naval_Battle(object):
 
         print("")
         #print("Tamanho do Navio %d (%d,%d)" % (size_ship, axis_x, axis_y))
+
+
+    def atach(self):
+        counter = 0
+        size_limite = self.size_board
+        print("Escolha um númentro entre 1 e ", size_limite)
+
+        is_valid = True
+        while(counter < 10):
+            counter = counter + 1
+            print("%dº Ataque"%(counter) )
+            atachtX = int(input("Axis X: "))
+            atachtY = int(input("Axis Y: "))
+            print("")
+
+            while (atachtX > size_limite) or (atachtX < 0) or (atachtY > size_limite) or (atachtY < 0):
+                print("%dº Dados Inválidos Ataque" % (counter))
+                atachtX = int(input("Axis X: "))
+                atachtY = int(input("Axis Y: "))
+                print("")
+
+            if(self.board[atachtY][atachtX] != 0):
+                print("You Hit: %d \n"% (self.board_atach[atachtY-1][atachtX-1]))
+                self.board_atach[atachtY-1][atachtX-1] = self.board[atachtY-1][atachtX-1]
+                self.print_board(self.board_atach)
+            else:
+                print("Shot in water!!!\n")
+
+
+
+
+
 
